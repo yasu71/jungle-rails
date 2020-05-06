@@ -6,7 +6,8 @@ RSpec.describe User, type: :model do
 
     subject {
       described_class.new(
-        name: "Mickey Mouse",
+        first_name: "Mickey",
+        last_name: "Mouse",
         email: "mickeymouse@gmail.com",
         password: "mickey",
         password_confirmation: "mickey"
@@ -17,10 +18,16 @@ RSpec.describe User, type: :model do
       expect(subject).to be_valid
     end
 
-    it "is not valid without a name" do
-      subject.name = nil
+    it "is not valid without a first name" do
+      subject.first_name = nil
       expect(subject).to_not be_valid
-      expect(subject.errors.full_messages).to include("Name can't be blank")
+      expect(subject.errors.full_messages).to include("First name can't be blank")
+    end
+
+    it "is not valid without a last name" do
+      subject.last_name = nil
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include("Last name can't be blank")
     end
 
     it "is not valid without an email" do 
@@ -37,7 +44,8 @@ RSpec.describe User, type: :model do
 
     it "is not valid if the account already exists" do
       another_user = User.new(
-        name: "Mickey Mouse",
+        first_name: "Mickey",
+        last_name: "Mouse",
         email: "mickeymouse@gmail.com",
         password: "mickey",
         password_confirmation: "mickey"
@@ -62,15 +70,16 @@ RSpec.describe User, type: :model do
 
     it "returns a user with valid credentials" do
       user = User.new(
-          name: 'Mickey Mouse',
-          email: 'mickey@mail.com',
-          password: 'Mickey',
-          password_confirmation: 'Mickey'
+          first_name: "Mickey",
+          last_name: "Mouse",
+          email: "mickey@mail.com",
+          password: "Mickey",
+          password_confirmation: "Mickey"
         )
       user.save
 
       authenticate = User.authenticate_with_credentials(
-        'mickey@mail.com', 'Mickey'
+        "mickey@mail.com", "Mickey"
       )
 
       expect(authenticate).to eq(user)
@@ -78,15 +87,16 @@ RSpec.describe User, type: :model do
 
     it "returns nil with an invalid email" do
       user = User.new(
-        name: 'Mickey Mouse',
-        email: 'mickey@mail.com',
-        password: 'Mickey',
-        password_confirmation: 'Mickey'
+        first_name: "Mickey",
+        last_name: "Mouse",
+        email: "mickey@mail.com",
+        password: "Mickey",
+        password_confirmation: "Mickey"
       )
       user.save
 
       authenticate = User.authenticate_with_credentials(
-        'minnie@mail.com', 'Mickey'
+        "minnie@mail.com", "Mickey"
       )
 
       expect(authenticate).to be_nil
@@ -94,47 +104,67 @@ RSpec.describe User, type: :model do
 
     it "returns nil with an invalid password" do
       user = User.new(
-        name: 'Mickey Mouse',
-        email: 'mickey@mail.com',
-        password: 'Mickey',
-        password_confirmation: 'Mickey'
+        first_name: "Mickey",
+        last_name: "Mouse",
+        email: "mickey@mail.com",
+        password: "Mickey",
+        password_confirmation: "Mickey"
       )
       user.save
 
       authenticate = User.authenticate_with_credentials(
-        'mickey@mail.com', 'Minnie'
+        "mickey@mail.com", "Minnie"
       )
 
       expect(authenticate).to be_nil
     end
 
-    it "returns a user with an extra space(s) before and/or after" do
+    it "returns a user with an extra spaces before and after for email" do
       user = User.new(
-        name: 'Mickey Mouse',
-        email: 'mickey@mail.com',
-        password: 'Mickey',
-        password_confirmation: 'Mickey'
+        first_name: "Mickey",
+        last_name: "Mouse",
+        email: "mickey@mail.com",
+        password: "Mickey",
+        password_confirmation: "Mickey"
       )
       user.save
 
       authenticate = User.authenticate_with_credentials(
-        ' mickey@mail.com ', 'Mickey'
+        " mickey@mail.com ", "Mickey"
       )
 
       expect(authenticate).to eq(user)
     end
 
-    it "returns a user with the wrong case for their email" do
+    it "returns a user with the wrong case for email" do
       user = User.new(
-        name: 'Mickey Mouse',
-        email: 'mickey@mail.com',
-        password: 'Mickey',
-        password_confirmation: 'Mickey'
+        first_name: "Mickey",
+        last_name: "Mouse",
+        email: "mickey@mail.com",
+        password: "Mickey",
+        password_confirmation: "Mickey"
       )
       user.save
 
       authenticate = User.authenticate_with_credentials(
-        'Mickey@mail.COM', 'Mickey'
+        "Mickey@mail.COM", "Mickey"
+      )
+
+      expect(authenticate).to eq(user)
+    end
+
+    it "returns a user with an extra spaces and the wrong case for email" do
+      user = User.new(
+        first_name: "Mickey",
+        last_name: "Mouse",
+        email: "mickey@mail.com",
+        password: "Mickey",
+        password_confirmation: "Mickey"
+      )
+      user.save
+
+      authenticate = User.authenticate_with_credentials(
+        " Mickey@mail.COM ", "Mickey"
       )
 
       expect(authenticate).to eq(user)
