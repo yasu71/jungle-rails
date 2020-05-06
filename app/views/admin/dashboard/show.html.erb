@@ -17,12 +17,12 @@
           <td class="text-center"><%= @products_count %></td>
           <td class="text-center"><%= @categories_count %></td>
         </tr>
+        <tr>
+          <td class="text-center"><%= link_to 'A List of Products >',  [:admin, :products], class: 'btn btn-info' %></td>
+          <td class="text-center"><%= link_to 'A List of Categories >',  [:admin, :categories], class: 'btn btn-info' %></td>
+        </tr>
       </tbody>
     </table>
   </section>
-
-  <footer>
-    <h4><%= link_to 'A List of Products >',  [:admin, :products] %></h4>
-  </footer>
 
 </article>
