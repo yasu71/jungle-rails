@@ -1,7 +1,18 @@
 # Jungle
 
-A mini e-commerce application built with Rails 4.2 for purposes of teaching Rails by example.
+A mini e-commerce application built with Rails 4.2 for purposes of learning Rails.
 
+This application allows users to create accounts, add items to cart and place orders by using Stripe integration. Admin can add and modify products and categories.
+
+## Final Product
+
+!["Main Page"](https://github.com/yasu71/jungle-rails/blob/master/docs/screenshot1.jpg?raw=true)
+
+!["Admin Page: all products"](https://github.com/yasu71/jungle-rails/blob/master/docs/screenshot2.jpg?raw=true)
+
+!["Admin Page: add a new product"](https://github.com/yasu71/jungle-rails/blob/master/docs/screenshot3.jpg?raw=true)
+
+!["Order Completed Page"](https://github.com/yasu71/jungle-rails/blob/master/docs/screenshot4.jpg?raw=true)
 
 ## Setup
 
@@ -13,12 +24,17 @@ A mini e-commerce application built with Rails 4.2 for purposes of teaching Rail
 6. Sign up for a Stripe account
 7. Put Stripe (test) keys into appropriate .env vars
 8. Run `bin/rails s -b 0.0.0.0` to start the server
+9. Open `localhost:3000` in your browser to open the application
 
 ## Stripe Testing
 
 Use Credit Card # 4111 1111 1111 1111 for testing success scenarios.
 
 More information in their docs: <https://stripe.com/docs/testing#cards>
+
+## Tests
+* Rspec-rails
+* Capybara
 
 ## Dependencies
 
