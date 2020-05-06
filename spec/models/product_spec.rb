@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Product, type: :model do
 
-  describe 'Validations' do
+  describe "Validations" do
 
-    it 'is valid with valid attributes' do
+    it "is valid with valid attributes" do
       @category = Category.create(name: "Cosmetics")
       @product = @category.products.create(name: "Peach Perfect", price: 35, quantity: 50)
       expect(@product).to be_valid
